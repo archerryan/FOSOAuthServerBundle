@@ -69,7 +69,15 @@ class OAuthAuthenticatorTest extends \PHPUnit\Framework\TestCase
             ->getMock()
         ;
         $this->userChecker = $this->getMockBuilder(UserCheckerInterface::class)->disableOriginalConstructor()->getMock();
-        $this->userProvider = $this->getMockBuilder(UserProviderInterface::class)->disableOriginalConstructor()->getMock();
+        $this->userProvider = $this->getMockBuilder(UserProviderInterface::class)
+            ->disableOriginalConstructor()
+            ->setMethods([
+                'refreshUser',
+                'supportsClass',
+                'loadUserByIdentifier',
+                'loadUserByUsername'
+            ])
+            ->getMock();
 
         // mock the core user object rather than the user interface that the new
         // getUserIdentifier method is used rather than the deprecated getUsername
@@ -236,7 +244,7 @@ class OAuthAuthenticatorTest extends \PHPUnit\Framework\TestCase
     {
         // expect the user to be loaded by the provider
         $this->userProvider->expects($this->once())
-            ->method('loadUserByUsername')
+            ->method('loadUserByIdentifier')
             ->with('test_user')
             ->will($this->returnValue($this->user))
         ;
@@ -271,7 +279,7 @@ class OAuthAuthenticatorTest extends \PHPUnit\Framework\TestCase
     public function testCreateAuthenticatedTokenWithUnexpectedPassportCredentials(): void
     {
         // expect the user to not be loaded by the provider
-        $this->userProvider->expects($this->never())->method('loadUserByUsername');
+        $this->userProvider->expects($this->never())->method('loadUserByIdentifier');
 
         // configure the passport with non-oauth credentials
         $passport = new Passport(
@@ -290,7 +298,7 @@ class OAuthAuthenticatorTest extends \PHPUnit\Framework\TestCase
     {
         // expect the user to be loaded by the provider
         $this->userProvider->expects($this->once())
-            ->method('loadUserByUsername')
+            ->method('loadUserByIdentifier')
             ->with('test_user')
             ->will($this->returnValue($this->user))
         ;
