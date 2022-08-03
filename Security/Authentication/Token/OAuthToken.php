@@ -37,6 +37,9 @@ class OAuthToken extends AbstractToken
         return $this->token;
     }
 
+    /**
+     * @return mixed
+     */
     public function getCredentials()
     {
         return $this->token;
