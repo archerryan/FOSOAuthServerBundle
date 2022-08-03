@@ -26,7 +26,7 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
-use Symfony\Component\Security\Http\Authenticator\AuthenticatorInterface;
+use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Authenticator\Passport\PassportInterface;
@@ -37,7 +37,7 @@ use Symfony\Component\Security\Http\Authenticator\Passport\UserPassportInterface
  *
  * @author  Israel J. Carberry <iisisrael@gmail.com>
  */
-class OAuthAuthenticator implements AuthenticatorInterface
+class OAuthAuthenticator extends AbstractAuthenticator
 {
     /**
      * @var OAuth2
