@@ -137,9 +137,11 @@ class OAuthAuthenticator extends AbstractAuthenticator
         }
 
         $token = new OAuthToken($credentials->getRoles($user));
-        $token->setAuthenticated(true);
         $token->setToken($credentials->getTokenString());
         $token->setUser($user);
+        if (method_exists($token, 'setAuthenticated')) {
+            $token->setAuthenticated(true, false);
+        }
 
         return $token;
     }
