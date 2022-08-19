@@ -55,7 +55,7 @@ class FOSOAuthServerBundleTest extends \PHPUnit\Framework\TestCase
 
         $securityExtension
             ->expects($this->at(0))
-            ->method('addSecurityListenerFactory')
+            ->method('addAuthenticatorFactory')
             ->with(new OAuthFactory())
             ->willReturn(null)
         ;
