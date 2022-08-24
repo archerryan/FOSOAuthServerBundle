@@ -29,8 +29,6 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
-use Symfony\Component\Security\Http\Authenticator\Passport\PassportInterface;
-use Symfony\Component\Security\Http\Authenticator\Passport\UserPassportInterface;
 
 /**
  * OAuthAuthenticator class.
@@ -67,7 +65,7 @@ class OAuthAuthenticator extends AbstractAuthenticator
     /**
      * {@inheritdoc}
      */
-    public function authenticate(Request $request): UserPassportInterface
+    public function authenticate(Request $request): Passport
     {
         // remove the authorization header from the request on this check
         $tokenString = $this->serverService->getBearerToken($request, true);
@@ -110,7 +108,7 @@ class OAuthAuthenticator extends AbstractAuthenticator
     /**
      * {@inheritdoc}
      */
-    public function createAuthenticatedToken(PassportInterface $passport, string $firewallName): TokenInterface
+    public function createAuthenticatedToken(Passport $passport, string $firewallName): TokenInterface
     {
         try {
             // expect the badges in the passport from authenticate method above
