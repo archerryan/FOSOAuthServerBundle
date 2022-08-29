@@ -26,7 +26,7 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
-use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
+use Symfony\Component\Security\Http\Authenticator\AuthenticatorInterface;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 
@@ -35,7 +35,7 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
  *
  * @author  Israel J. Carberry <iisisrael@gmail.com>
  */
-class OAuthAuthenticator extends AbstractAuthenticator
+class OAuthAuthenticator implements AuthenticatorInterface
 {
     /**
      * @var OAuth2
@@ -106,9 +106,19 @@ class OAuthAuthenticator extends AbstractAuthenticator
     }
 
     /**
-     * {@inheritdoc}
+     * Deprecated, here to maintain Symfony 5 support.
      */
     public function createAuthenticatedToken(Passport $passport, string $firewallName): TokenInterface
+    {
+        $token = $this->createToken($passport, $firewallName);
+        $token->setAuthenticated(true, false);
+        return $token;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function createToken(Passport $passport, string $firewallName): TokenInterface
     {
         try {
             // expect the badges in the passport from authenticate method above
@@ -137,9 +147,6 @@ class OAuthAuthenticator extends AbstractAuthenticator
         $token = new OAuthToken($credentials->getRoles($user));
         $token->setToken($credentials->getTokenString());
         $token->setUser($user);
-        if (method_exists($token, 'setAuthenticated')) {
-            $token->setAuthenticated(true, false);
-        }
 
         return $token;
     }
