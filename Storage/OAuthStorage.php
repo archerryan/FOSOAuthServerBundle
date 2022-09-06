@@ -94,7 +94,7 @@ class OAuthStorage implements IOAuth2RefreshTokens, IOAuth2GrantUser, IOAuth2Gra
         $this->grantExtensions[$uri] = $grantExtension;
     }
 
-    public function getClient($clientId): IOAuth2Client
+    public function getClient($clientId): ?IOAuth2Client
     {
         return $this->clientManager->findClientByPublicId($clientId);
     }
@@ -113,7 +113,7 @@ class OAuthStorage implements IOAuth2RefreshTokens, IOAuth2GrantUser, IOAuth2Gra
         return $this->checkClientCredentials($client, $client_secret);
     }
 
-    public function getAccessToken($token): IOAuth2AccessToken
+    public function getAccessToken($token): ?IOAuth2AccessToken
     {
         return $this->accessTokenManager->findTokenByToken($token);
     }
@@ -155,13 +155,13 @@ class OAuthStorage implements IOAuth2RefreshTokens, IOAuth2GrantUser, IOAuth2Gra
         }
 
         try {
-            $user = $this->userProvider->loadUserByUserIdentifier($username);
+            $user = $this->userProvider->loadUserByIdentifier($username);
         } catch (AuthenticationException $e) {
             return false;
         }
 
         $passwordHasher = $this->passwordHasherFactory->getPasswordHasher($user);
-        if ($passwordHasher->isPasswordValid($user->getPassword(), $password, $user->getSalt())) {
+        if ($passwordHasher->isPasswordValid($user->getPassword(), $password)) {
             return [
                 'data' => $user,
             ];
@@ -173,7 +173,7 @@ class OAuthStorage implements IOAuth2RefreshTokens, IOAuth2GrantUser, IOAuth2Gra
     /**
      * {@inheritdoc}
      */
-    public function getAuthCode($code): IOAuth2AuthCode
+    public function getAuthCode($code): ?IOAuth2AuthCode
     {
         return $this->authCodeManager->findAuthCodeByToken($code);
     }
@@ -202,7 +202,7 @@ class OAuthStorage implements IOAuth2RefreshTokens, IOAuth2GrantUser, IOAuth2Gra
     /**
      * {@inheritdoc}
      */
-    public function getRefreshToken($tokenString): IOAuth2Token
+    public function getRefreshToken($tokenString): ?IOAuth2Token
     {
         return $this->refreshTokenManager->findTokenByToken($tokenString);
     }

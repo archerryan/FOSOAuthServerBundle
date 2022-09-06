@@ -261,7 +261,7 @@ class AuthorizeControllerTest extends \PHPUnit\Framework\TestCase
             ->willReturn($this->user)
         ;
 
-        $this->requstStack->getSession()
+        $this->requestStack->getSession()
             ->expects($this->at(0))
             ->method('get')
             ->with('_fos_oauth_server.ensure_logout')

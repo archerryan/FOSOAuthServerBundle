@@ -22,6 +22,7 @@ use FOS\OAuthServerBundle\Model\ClientManagerInterface;
 use FOS\OAuthServerBundle\Model\RefreshToken;
 use FOS\OAuthServerBundle\Model\RefreshTokenManagerInterface;
 use FOS\OAuthServerBundle\Storage\OAuthStorage;
+use FOS\OAuthServerBundle\Tests\Functional\MockUser;
 use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -363,7 +364,7 @@ class OAuthStorageTest extends \PHPUnit\Framework\TestCase
 
         $this->userProvider
             ->expects(self::once())
-            ->method('loadUserByUserIdentifier')
+            ->method('loadUserByIdentifier')
             ->with('Joe')
             ->willThrowException(new AuthenticationException('No such user'))
         ;
@@ -376,19 +377,18 @@ class OAuthStorageTest extends \PHPUnit\Framework\TestCase
     public function testCheckUserCredentialsReturnsTrueOnValidCredentials(): void
     {
         $client = new Client();
-        $user = $this->getMockBuilder('Symfony\Component\Security\Core\User\UserInterface')
+        $user = $this->getMockBuilder('FOS\OAuthServerBundle\Tests\Functional\MockUser')
             ->disableOriginalConstructor()
             ->getMock()
         ;
         $user->expects($this->once())
             ->method('getPassword')->with()->will($this->returnValue('foo'));
-        $user->expects($this->once())
-            ->method('getSalt')->with()->will($this->returnValue('bar'));
 
-        $passwordHasher = $this->getMockBuilder('Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface')
+        $passwordHasher = $this->getMockBuilder('Symfony\Component\PasswordHasher\PasswordHasherInterface')
             ->disableOriginalConstructor()
             ->getMock()
         ;
+
         $passwordHasher->expects($this->once())
             ->method('isPasswordValid')
             ->with('foo', 'baz', 'bar')
@@ -396,7 +396,7 @@ class OAuthStorageTest extends \PHPUnit\Framework\TestCase
         ;
 
         $this->userProvider->expects($this->once())
-            ->method('loadUserByUserIdentifier')
+            ->method('loadUserByIdentifier')
             ->with('Joe')
             ->will($this->returnValue($user))
         ;
@@ -435,7 +435,7 @@ class OAuthStorageTest extends \PHPUnit\Framework\TestCase
         ;
 
         $this->userProvider->expects($this->once())
-            ->method('loadUserByUserIdentifier')
+            ->method('loadUserByIdentifier')
             ->with('Joe')
             ->will($this->returnValue($user))
         ;
@@ -454,7 +454,7 @@ class OAuthStorageTest extends \PHPUnit\Framework\TestCase
         $client = new Client();
 
         $this->userProvider->expects($this->once())
-            ->method('loadUserByUserIdentifier')
+            ->method('loadUserByIdentifier')
             ->with('Joe')
             ->willThrowException(new AuthenticationException('No such user'))
         ;
@@ -633,7 +633,7 @@ class User implements UserInterface
         $this->username = $username;
     }
 
-    public function getRoles()
+    public function getRoles(): array
     {
         return [];
     }
@@ -654,6 +654,14 @@ class User implements UserInterface
     public function getUsername()
     {
         return $this->username;
+    }
+
+    /**
+     * @return string|int
+     */
+    public function getUserIdentifier(): string
+    {
+        return $this->getUsername();
     }
 
     public function eraseCredentials(): void
