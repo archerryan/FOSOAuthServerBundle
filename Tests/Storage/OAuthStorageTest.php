@@ -384,14 +384,15 @@ class OAuthStorageTest extends \PHPUnit\Framework\TestCase
         $user->expects($this->once())
             ->method('getPassword')->with()->will($this->returnValue('foo'));
 
+
         $passwordHasher = $this->getMockBuilder('Symfony\Component\PasswordHasher\PasswordHasherInterface')
             ->disableOriginalConstructor()
             ->getMock()
         ;
 
         $passwordHasher->expects($this->once())
-            ->method('isPasswordValid')
-            ->with('foo', 'baz', 'bar')
+            ->method('verify')
+            ->with('foo', 'baz')
             ->will($this->returnValue(true))
         ;
 
@@ -400,6 +401,7 @@ class OAuthStorageTest extends \PHPUnit\Framework\TestCase
             ->with('Joe')
             ->will($this->returnValue($user))
         ;
+
 
         $this->passwordHasherFactory->expects($this->once())
             ->method('getPasswordHasher')
@@ -415,22 +417,20 @@ class OAuthStorageTest extends \PHPUnit\Framework\TestCase
     public function testCheckUserCredentialsReturnsFalseOnInvalidCredentials(): void
     {
         $client = new Client();
-        $user = $this->getMockBuilder('Symfony\Component\Security\Core\User\UserInterface')
+        $user = $this->getMockBuilder('FOS\OAuthServerBundle\Tests\Functional\MockUser')
             ->disableOriginalConstructor()
             ->getMock()
         ;
         $user->expects($this->once())
             ->method('getPassword')->with()->will($this->returnValue('foo'));
-        $user->expects($this->once())
-            ->method('getSalt')->with()->will($this->returnValue('bar'));
 
-        $passwordHasher = $this->getMockBuilder('Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface')
+        $passwordHasher = $this->getMockBuilder('Symfony\Component\PasswordHasher\PasswordHasherInterface')
             ->disableOriginalConstructor()
             ->getMock()
         ;
         $passwordHasher->expects($this->once())
-            ->method('isPasswordValid')
-            ->with('foo', 'baz', 'bar')
+            ->method('verify')
+            ->with('foo', 'baz')
             ->will($this->returnValue(false))
         ;
 
