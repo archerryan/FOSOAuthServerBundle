@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace FOS\OAuthServerBundle\DependencyInjection\Security\Factory;
 
 use Symfony\Bundle\SecurityBundle\DependencyInjection\Security\Factory\AuthenticatorFactoryInterface;
-use Symfony\Bundle\SecurityBundle\DependencyInjection\Security\Factory\SecurityFactoryInterface;
 use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -25,12 +24,12 @@ use Symfony\Component\DependencyInjection\Reference;
  *
  * @author Arnaud Le Blanc <arnaud.lb@gmail.com>
  */
-class OAuthFactory implements AuthenticatorFactoryInterface, SecurityFactoryInterface
+class OAuthFactory implements AuthenticatorFactoryInterface
 {
     /**
      * {@inheritdoc}
      */
-    public function createAuthenticator(ContainerBuilder $container, string $id, array $config, string $userProviderId)
+    public function createAuthenticator(ContainerBuilder $container, string $id, array $config, string $userProviderId): array|string
     {
         $providerId = 'fos_oauth_server.security.authentication.authenticator.'.$id;
         $container
@@ -46,7 +45,7 @@ class OAuthFactory implements AuthenticatorFactoryInterface, SecurityFactoryInte
     /**
      * {@inheritdoc}
      */
-    public function create(ContainerBuilder $container, $id, $config, $userProvider, $defaultEntryPoint)
+    public function create(ContainerBuilder $container, $id, $config, $userProvider, $defaultEntryPoint): array
     {
         $providerId = 'security.authentication.provider.fos_oauth_server.'.$id;
         $container
@@ -64,7 +63,7 @@ class OAuthFactory implements AuthenticatorFactoryInterface, SecurityFactoryInte
     /**
      * {@inheritdoc}
      */
-    public function getPosition()
+    public function getPosition(): string
     {
         return 'pre_auth';
     }
@@ -72,7 +71,15 @@ class OAuthFactory implements AuthenticatorFactoryInterface, SecurityFactoryInte
     /**
      * {@inheritdoc}
      */
-    public function getKey()
+    public function getPriority(): int
+    {
+        return 0;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getKey(): string
     {
         return 'fos_oauth';
     }
