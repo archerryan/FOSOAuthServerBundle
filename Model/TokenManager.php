@@ -15,9 +15,6 @@ namespace FOS\OAuthServerBundle\Model;
 
 abstract class TokenManager implements TokenManagerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function createToken()
     {
         $class = $this->getClass();
@@ -25,9 +22,6 @@ abstract class TokenManager implements TokenManagerInterface
         return new $class();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function findTokenByToken($token)
     {
         return $this->findTokenBy(['token' => $token]);

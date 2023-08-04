@@ -31,9 +31,6 @@ class CreateClientCommandTest extends TestCase
      */
     private $clientManager;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         $this->clientManager = $this->getMockBuilder(ClientManagerInterface::class)->disableOriginalConstructor()->getMock();

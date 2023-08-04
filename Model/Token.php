@@ -52,33 +52,21 @@ class Token implements TokenInterface
         return $this->id;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getClientId(): string
     {
         return $this->getClient()->getPublicId();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setExpiresAt($timestamp)
     {
         $this->expiresAt = $timestamp;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getExpiresAt()
     {
         return $this->expiresAt;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getExpiresIn(): int
     {
         if ($this->expiresAt) {
@@ -88,9 +76,6 @@ class Token implements TokenInterface
         return PHP_INT_MAX;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function hasExpired(): bool
     {
         if ($this->expiresAt) {
@@ -100,73 +85,46 @@ class Token implements TokenInterface
         return false;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setToken($token)
     {
         $this->token = $token;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getToken(): string
     {
         return $this->token;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setScope($scope)
     {
         $this->scope = $scope;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getScope(): ?string
     {
         return $this->scope;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setUser(UserInterface $user)
     {
         $this->user = $user;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getUser()
     {
         return $this->user;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getData(): mixed
     {
         return $this->getUser();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setClient(ClientInterface $client)
     {
         $this->client = $client;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getClient()
     {
         return $this->client;

@@ -23,11 +23,8 @@ class TokenTest extends TestCase
 {
     /**
      * @dataProvider getTestHasExpiredData
-     *
-     * @param mixed $expiresAt
-     * @param mixed $expect
      */
-    public function testHasExpired($expiresAt, $expect): void
+    public function testHasExpired(mixed $expiresAt, mixed $expect): void
     {
         $token = new Token();
         $token->setExpiresAt($expiresAt);

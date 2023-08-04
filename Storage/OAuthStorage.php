@@ -86,9 +86,6 @@ class OAuthStorage implements IOAuth2RefreshTokens, IOAuth2GrantUser, IOAuth2Gra
         $this->grantExtensions = [];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setGrantExtension($uri, GrantExtensionInterface $grantExtension)
     {
         $this->grantExtensions[$uri] = $grantExtension;
@@ -170,17 +167,11 @@ class OAuthStorage implements IOAuth2RefreshTokens, IOAuth2GrantUser, IOAuth2Gra
         return false;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getAuthCode($code): ?IOAuth2AuthCode
     {
         return $this->authCodeManager->findAuthCodeByToken($code);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function createAuthCode($code, IOAuth2Client $client, $data, $redirect_uri, $expires, $scope = null)
     {
         if (!$client instanceof ClientInterface) {
@@ -199,17 +190,11 @@ class OAuthStorage implements IOAuth2RefreshTokens, IOAuth2GrantUser, IOAuth2Gra
         return $authCode;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getRefreshToken($tokenString): ?IOAuth2Token
     {
         return $this->refreshTokenManager->findTokenByToken($tokenString);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function createRefreshToken($tokenString, IOAuth2Client $client, $data, $expires, $scope = null)
     {
         if (!$client instanceof ClientInterface) {
@@ -231,9 +216,6 @@ class OAuthStorage implements IOAuth2RefreshTokens, IOAuth2GrantUser, IOAuth2Gra
         return $token;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function unsetRefreshToken($tokenString)
     {
         $token = $this->refreshTokenManager->findTokenByToken($tokenString);
@@ -243,9 +225,6 @@ class OAuthStorage implements IOAuth2RefreshTokens, IOAuth2GrantUser, IOAuth2Gra
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function checkGrantExtension(IOAuth2Client $client, $uri, array $inputData, array $authHeaders): bool|array
     {
         if (!isset($this->grantExtensions[$uri])) {
@@ -257,9 +236,6 @@ class OAuthStorage implements IOAuth2RefreshTokens, IOAuth2GrantUser, IOAuth2Gra
         return $grantExtension->checkGrantExtension($client, $inputData, $authHeaders);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function markAuthCodeAsUsed($code)
     {
         $authCode = $this->authCodeManager->findAuthCodeByToken($code);

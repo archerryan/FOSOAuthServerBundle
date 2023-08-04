@@ -60,7 +60,7 @@ class RequestStackCompilerPassTest extends \PHPUnit\Framework\TestCase
             ->willReturn(true)
         ;
 
-        $this->assertNull($this->instance->process($this->container));
+        $this->instance->process($this->container);
     }
 
     public function testProcess(): void
@@ -96,6 +96,6 @@ class RequestStackCompilerPassTest extends \PHPUnit\Framework\TestCase
             ->willReturn($definition)
         ;
 
-        $this->assertNull($this->instance->process($this->container));
+        $this->instance->process($this->container);
     }
 }

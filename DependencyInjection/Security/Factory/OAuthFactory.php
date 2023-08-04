@@ -26,9 +26,6 @@ use Symfony\Component\DependencyInjection\Reference;
  */
 class OAuthFactory implements AuthenticatorFactoryInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function createAuthenticator(ContainerBuilder $container, string $id, array $config, string $userProviderId): array|string
     {
         $providerId = 'fos_oauth_server.security.authentication.authenticator.'.$id;
@@ -42,9 +39,6 @@ class OAuthFactory implements AuthenticatorFactoryInterface
         return $providerId;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function create(ContainerBuilder $container, $id, $config, $userProvider, $defaultEntryPoint): array
     {
         $providerId = 'security.authentication.provider.fos_oauth_server.'.$id;
@@ -60,34 +54,22 @@ class OAuthFactory implements AuthenticatorFactoryInterface
         return [$providerId, $listenerId, 'fos_oauth_server.security.entry_point'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPosition(): string
     {
         return 'pre_auth';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPriority(): int
     {
         return 0;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getKey(): string
     {
         return 'fos_oauth';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function addConfiguration(NodeDefinition $node)
+    public function addConfiguration(NodeDefinition $node): void
     {
     }
 }

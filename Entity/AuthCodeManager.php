@@ -38,43 +38,28 @@ class AuthCodeManager extends BaseAuthCodeManager
         $this->class = $class;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getClass()
     {
         return $this->class;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function findAuthCodeBy(array $criteria)
     {
         return $this->em->getRepository($this->class)->findOneBy($criteria);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function updateAuthCode(AuthCodeInterface $authCode)
     {
         $this->em->persist($authCode);
         $this->em->flush();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function deleteAuthCode(AuthCodeInterface $authCode)
     {
         $this->em->remove($authCode);
         $this->em->flush();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function deleteExpired()
     {
         /** @var \Doctrine\ORM\EntityRepository $repository */

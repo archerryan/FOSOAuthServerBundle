@@ -62,9 +62,6 @@ class OAuthAuthenticator implements AuthenticatorInterface
         $this->userProvider = $userProvider;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function authenticate(Request $request): Passport
     {
         // remove the authorization header from the request on this check
@@ -78,8 +75,7 @@ class OAuthAuthenticator implements AuthenticatorInterface
             // allow for dependency on deprecated getUsername method
             $username = $user instanceof UserInterface
                 ? (method_exists($user, 'getUserIdentifier') ? $user->getUserIdentifier() : $user->getUsername())
-                : null
-            ;
+                : null;
         } catch (OAuth2AuthenticateException $e) {
             // do nothing - credentials will remain unresolved below
         }
@@ -116,9 +112,6 @@ class OAuthAuthenticator implements AuthenticatorInterface
         return $token;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function createToken(Passport $passport, string $firewallName): TokenInterface
     {
         try {
@@ -152,17 +145,11 @@ class OAuthAuthenticator implements AuthenticatorInterface
         return $token;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
         return null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response
     {
         $responseException = new OAuth2AuthenticateException(
@@ -176,9 +163,6 @@ class OAuthAuthenticator implements AuthenticatorInterface
         return $responseException->getHttpResponse();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function supports(Request $request): ?bool
     {
         // do not remove the authorization header from the request on this check

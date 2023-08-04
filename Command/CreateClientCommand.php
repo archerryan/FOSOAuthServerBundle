@@ -14,16 +14,19 @@ declare(strict_types=1);
 namespace FOS\OAuthServerBundle\Command;
 
 use FOS\OAuthServerBundle\Model\ClientManagerInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+#[AsCommand(
+    name: 'fos:oauth-server:create-client',
+    description: 'Creates a new client',
+)]
 class CreateClientCommand extends Command
 {
-    protected static $defaultName = 'fos:oauth-server:create-client';
-
     private $clientManager;
 
     public function __construct(ClientManagerInterface $clientManager)
@@ -33,10 +36,7 @@ class CreateClientCommand extends Command
         $this->clientManager = $clientManager;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
@@ -66,9 +66,6 @@ EOT
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);

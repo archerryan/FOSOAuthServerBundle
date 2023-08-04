@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace FOS\OAuthServerBundle\Tests\DependencyInjection\Security\Factory;
 
 use FOS\OAuthServerBundle\DependencyInjection\Security\Factory\OAuthFactory;
-use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -169,14 +168,5 @@ class OAuthFactoryTest extends \PHPUnit\Framework\TestCase
             'fos_oauth_server.security.authentication.authenticator.'.$id,
             $this->instance->createAuthenticator($container, $id, $config, $userProviderId)
         );
-    }
-
-    public function testAddConfigurationDoesNothing(): void
-    {
-        $nodeDefinition = $this->getMockBuilder(NodeDefinition::class)
-            ->disableOriginalConstructor()
-            ->getMock()
-        ;
-        $this->assertNull($this->instance->addConfiguration($nodeDefinition));
     }
 }
