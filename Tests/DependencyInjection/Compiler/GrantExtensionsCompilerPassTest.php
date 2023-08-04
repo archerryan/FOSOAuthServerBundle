@@ -90,7 +90,7 @@ class GrantExtensionsCompilerPassTest extends \PHPUnit\Framework\TestCase
             ->willReturn($resolvedClassName)
         ;
 
-        $this->assertNull($this->instance->process($container));
+        $this->instance->process($container);
     }
 
     public function testProcessWillFailIfUriIsEmpty(): void
@@ -196,7 +196,7 @@ class GrantExtensionsCompilerPassTest extends \PHPUnit\Framework\TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage($exceptionMessage);
 
-        $this->assertNull($this->instance->process($container));
+        $this->instance->process($container);
     }
 
     public function testProcess(): void
@@ -301,6 +301,6 @@ class GrantExtensionsCompilerPassTest extends \PHPUnit\Framework\TestCase
             ->withConsecutive(...$addMethodCallWiths)
         ;
 
-        $this->assertNull($this->instance->process($container));
+        $this->instance->process($container);
     }
 }

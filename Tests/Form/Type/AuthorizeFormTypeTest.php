@@ -87,7 +87,7 @@ class AuthorizeFormTypeTest extends TypeTestCase
             ->willReturn($resolver)
         ;
 
-        $this->assertNull($this->instance->configureOptions($resolver));
+        $this->instance->configureOptions($resolver);
     }
 
     public function testGetName(): void

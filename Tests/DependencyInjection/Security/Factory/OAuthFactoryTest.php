@@ -170,13 +170,4 @@ class OAuthFactoryTest extends \PHPUnit\Framework\TestCase
             $this->instance->createAuthenticator($container, $id, $config, $userProviderId)
         );
     }
-
-    public function testAddConfigurationDoesNothing(): void
-    {
-        $nodeDefinition = $this->getMockBuilder(NodeDefinition::class)
-            ->disableOriginalConstructor()
-            ->getMock()
-        ;
-        $this->assertNull($this->instance->addConfiguration($nodeDefinition));
-    }
 }
