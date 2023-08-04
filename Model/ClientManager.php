@@ -15,9 +15,6 @@ namespace FOS\OAuthServerBundle\Model;
 
 abstract class ClientManager implements ClientManagerInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     public function createClient()
     {
         $class = $this->getClass();
@@ -25,10 +22,7 @@ abstract class ClientManager implements ClientManagerInterface
         return new $class();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function findClientByPublicId($publicId)
+    public function findClientByPublicId(mixed $publicId)
     {
         if (false === $pos = mb_strpos($publicId, '_')) {
             return null;

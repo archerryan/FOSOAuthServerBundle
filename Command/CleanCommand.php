@@ -42,9 +42,6 @@ class CleanCommand extends Command
         $this->authCodeManager = $authCodeManager;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configure(): void
     {
         parent::configure();
@@ -60,9 +57,6 @@ EOT
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         foreach ([$this->accessTokenManager, $this->refreshTokenManager, $this->authCodeManager] as $service) {

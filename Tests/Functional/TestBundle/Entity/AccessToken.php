@@ -20,19 +20,23 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity
+ *
  * @ORM\Table(name="access_tokens")
  */
 class AccessToken extends BaseAccessToken
 {
     /**
      * @ORM\Id
+     *
      * @ORM\Column(type="integer")
+     *
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="Client")
+     *
      * @ORM\JoinColumn(nullable=false)
      *
      * @var ClientInterface

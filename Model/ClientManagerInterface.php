@@ -31,11 +31,9 @@ interface ClientManagerInterface
     public function findClientBy(array $criteria);
 
     /**
-     * @param mixed $publicId
-     *
      * @return ClientInterface|null
      */
-    public function findClientByPublicId($publicId);
+    public function findClientByPublicId(mixed $publicId);
 
     public function updateClient(ClientInterface $client);
 

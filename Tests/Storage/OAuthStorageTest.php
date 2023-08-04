@@ -389,9 +389,11 @@ class OAuthStorageTest extends \PHPUnit\Framework\TestCase
             ->getMock()
         ;
         $user->expects($this->once())
-            ->method('getPassword')->with()->will($this->returnValue('foo'));
+            ->method('getPassword')->with()->will($this->returnValue('foo'))
+        ;
         $user->expects($this->once())
-            ->method('getSalt')->with()->will($this->returnValue('bar'));
+            ->method('getSalt')->with()->will($this->returnValue('bar'))
+        ;
 
         $passwordHasher = $this->getMockBuilder('Symfony\Component\PasswordHasher\PasswordHasherInterface')
             ->disableOriginalConstructor()
@@ -429,9 +431,11 @@ class OAuthStorageTest extends \PHPUnit\Framework\TestCase
             ->getMock()
         ;
         $user->expects($this->once())
-            ->method('getPassword')->with()->will($this->returnValue('foo'));
+            ->method('getPassword')->with()->will($this->returnValue('foo'))
+        ;
         $user->expects($this->once())
-            ->method('getSalt')->with()->will($this->returnValue('bar'));
+            ->method('getSalt')->with()->will($this->returnValue('bar'))
+        ;
 
         $passwordHasher = $this->getMockBuilder('Symfony\Component\PasswordHasher\PasswordHasherInterface')
             ->disableOriginalConstructor()

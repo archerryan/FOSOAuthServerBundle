@@ -41,9 +41,6 @@ class CleanCommandTest extends \PHPUnit\Framework\TestCase
      */
     private $authCodeManager;
 
-    /**
-     * {@inheritdoc}
-     */
     protected function setUp(): void
     {
         $this->accessTokenManager = $this->getMockBuilder(TokenManagerInterface::class)->disableOriginalConstructor()->getMock();

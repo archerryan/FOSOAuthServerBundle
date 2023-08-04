@@ -32,9 +32,6 @@ class AuthorizeFormType extends AbstractType
         $builder->add('scope', HiddenType::class);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
